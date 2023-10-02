@@ -1,21 +1,35 @@
-﻿namespace Application
+﻿using System.Globalization;
+
+namespace Application
 {
     public static class ActivityNotifications
     {
         //expenditure = "2 3 4 2 3 6 8 4 5";
+        //days = 5;
         public static int getExpenditureNotifications(List<int> expenditure, int days)
         {
             int notifications = 0;
             //TODO: create algorithms
 
-           int median = GetMedianOfList(expenditure);
+            if(days < expenditure.Count)
+            {
+                return notifications;
+            }
+
+
+            var currentDay = expenditure.GetRange(0, days);
+            
+
+            double median = GetMedianOfList(expenditure);
+
+
 
             return notifications;
         }
 
-        public static int GetMedianOfList(List<int> numbers)
+        public static double GetMedianOfList(List<int> numbers)
         {
-            int median = 0;
+            double median;
             numbers.Sort();
 
             if(int.IsEvenInteger(numbers.Count))
