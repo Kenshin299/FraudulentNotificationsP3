@@ -2,7 +2,7 @@
 using TestData;
 using TestData.Models;
 
-InputFormat inputFormat = TestDataSource.TestCase0();// .TestCase1() - .TestCase2() - .TestCase3()
+InputFormat inputFormat = TestDataSource.TestCase3();// .TestCase1() - .TestCase2() - .TestCase3()
 
 int result = ActivityNotifications.getExpenditureNotifications(inputFormat.Expenditure, inputFormat.Days);
 

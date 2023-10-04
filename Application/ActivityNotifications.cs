@@ -11,39 +11,48 @@ namespace Application
             int notifications = 0;
             //TODO: create algorithms
 
-            if(days < expenditure.Count)
+            if (days >= expenditure.Count)
             {
                 return notifications;
             }
 
+            // Queue de los ultimos dias
+            Queue<int> currentDaysExpenditure = new Queue<int>(expenditure.GetRange(0, days));
 
-            var currentDay = expenditure.GetRange(0, days);
-            
+            for (int i = days; i < expenditure.Count; i++)
+            {
+                double median = GetMedianOfList(currentDaysExpenditure);
 
-            double median = GetMedianOfList(expenditure);
+                if (expenditure[i] >= 2 * median)
+                {
+                    notifications++;
+                }
 
-
+                currentDaysExpenditure.Dequeue();
+                currentDaysExpenditure.Enqueue(expenditure[i]);
+            }
 
             return notifications;
         }
 
-        public static double GetMedianOfList(List<int> numbers)
+        public static double GetMedianOfList(Queue<int> numbers)
         {
             double median;
-            numbers.Sort();
+            List<int> sortedNumbers = new List<int>(numbers);
+            sortedNumbers.Sort();
 
-            if(int.IsEvenInteger(numbers.Count))
+            if(int.IsEvenInteger(numbers.Count)) //Este metodo es igual (x % 2 == 0)
             {
-                var position1 = numbers[numbers.Count / 2];
-                var position2 = numbers[(numbers.Count / 2) - 1];
+                var position1 = sortedNumbers[sortedNumbers.Count / 2];
+                var position2 = sortedNumbers[(sortedNumbers.Count / 2) - 1];
 
-                median = (position1 + position2) / 2;
+                median = (position1 + position2) / 2.0;
                 return median;
             }
             else
             {
-                var position = (numbers.Count - 1) / 2;
-                median = numbers[position];
+                var position = (sortedNumbers.Count - 1) / 2;
+                median = sortedNumbers[position];
                 return median;
             }            
         }
